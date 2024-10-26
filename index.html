@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EmojiGrocery</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+      }
+      h1,
+      h2 {
+        margin-bottom: 10px;
+      }
+      .emoji-category {
+        margin: 10px 0;
+      }
+      .emoji-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin: 10px 0;
+      }
+      .emoji-grid div {
+        font-size: 2em;
+        cursor: pointer;
+      }
+      #groceryList {
+        list-style-type: none;
+        padding: 0;
+      }
+      #groceryList li {
+        font-size: 1.2em;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>EmojiGrocery</h1>
+
+    <!-- Emoji Categories -->
+    <div class="emoji-category">
+      <h2>Produce</h2>
+      <div class="emoji-grid" id="produceGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Meat</h2>
+      <div class="emoji-grid" id="meatGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Dairy</h2>
+      <div class="emoji-grid" id="dairyGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Dry Goods</h2>
+      <div class="emoji-grid" id="dryGoodsGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Prepared Meals</h2>
+      <div class="emoji-grid" id="preparedMealsGrid"></div>
+    </div>
+
+    <!-- Custom Item Input -->
+    <input type="text" id="customItem" placeholder="Add custom item" />
+    <button onclick="addCustomItem()">Add to List</button>
+
+    <!-- Grocery List -->
+    <h2>Your Grocery List</h2>
+    <ul id="groceryList"></ul>
+
+    <script>
+      // Emoji categories
+      const emojis = {
+        produce: [
+          "🍎",
+          "🍌",
+          "🥕",
+          "🍉",
+          "🍇",
+          "🍓",
+          "🍒",
+          "🍅",
+          "🍆",
+          "🥑",
+          "🥭",
+          "🥒",
+          "🥦",
+          "🍍",
+          "🌽",
+        ],
+        meat: [
+          "🍗",
+          "🥩",
+          "🍖",
+          "🍤",
+          "🍔",
+          "🥓",
+          "🍣",
+          "🦞",
+          "🍤",
+          "🐟",
+          "🦀",
+          "🍢",
+          "🥘",
+        ],
+        dairy: ["🥛", "🧀", "🥚", "🍦", "🥧", "🍶", "🧈", "🍨", "🥥", "🍯"],
+        dryGoods: [
+          "🍞",
+          "🍚",
+          "🍪",
+          "🍿",
+          "🍜",
+          "🥫",
+          "🍙",
+          "🥖",
+          "🍝",
+          "🥯",
+          "🍠",
+          "🍘",
+          "🥜",
+        ],
+        preparedMeals: [
+          "🌮",
+          "🍕",
+          "🍔",
+          "🍜",
+          "🍣",
+          "🍤",
+          "🌯",
+          "🥪",
+          "🥟",
+          "🍱",
+          "🍛",
+          "🥡",
+          "🍲",
+          "🍤",
+        ],
+      };
+
+      const groceryList = document.getElementById("groceryList");
+
+      // Load saved list on page load
+      document.addEventListener("DOMContentLoaded", loadList);
+
+      // Populate emoji grids
+      for (const [category, items] of Object.entries(emojis)) {
+        const grid = document.getElementById(category + "Grid");
+        items.forEach((emoji) => {
+          const emojiDiv = document.createElement("div");
+          emojiDiv.textContent = emoji;
+          emojiDiv.addEventListener("click", () => addToList(emoji));
+          grid.appendChild(emojiDiv);
+        });
+      }
+
+      // Add emoji to list
+      function addToList(item) {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+        groceryList.appendChild(listItem);
+        saveList();
+      }
+
+      // Add custom item
+      function addCustomItem() {
+        const customItem = document.getElementById("customItem").value.trim();
+        if (customItem) {
+          addToList(customItem);
+          document.getElementById("customItem").value = "";
+        }
+      }
+
+      // Save list to local storage
+      function saveList() {
+        const items = [];
+        groceryList
+          .querySelectorAll("li")
+          .forEach((li) => items.push(li.textContent));
+        localStorage.setItem("groceryList", JSON.stringify(items));
+      }
+
+      // Load list from local storage
+      function loadList() {
+        const items = JSON.parse(localStorage.getItem("groceryList")) || [];
+        items.forEach((item) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = item;
+          groceryList.appendChild(listItem);
+        });
+      }
+    </script>
+  </body>
+</html>
