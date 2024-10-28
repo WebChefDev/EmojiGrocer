@@ -21,22 +21,73 @@
         margin: 10px 0;
       }
       .emoji-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        display: flex;
+        flex-wrap: wrap;
         gap: 10px;
         margin: 10px 0;
+        justify-content: center; /* Centers items horizontally */
       }
       .emoji-grid div {
-        font-size: 2em;
+        font-size: 3em;
         cursor: pointer;
+
+        text-align: center;
       }
       #groceryList {
+        font-size: 3em;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
         list-style-type: none;
         padding: 0;
+        justify-content: center; /* Centers items horizontally */
       }
+
       #groceryList li {
         font-size: 1.2em;
-        margin: 5px 0;
+        margin: 5px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        color: #333;
+        border-radius: 5px;
+        min-width: 80px; /* Optional: Set a minimum width */
+        text-align: center;
+      }
+
+      .custom-item-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0; /* Space around the input area */
+      }
+
+      #customItem {
+        padding: 10px 15px; /* Add padding for better touch targets */
+        font-size: 1em; /* Adjust font size */
+        border: 2px solid #4caf50; /* Green border */
+        border-radius: 5px; /* Rounded corners */
+        margin-right: 10px; /* Space between input and button */
+        transition: border-color 0.3s; /* Smooth border color transition */
+      }
+
+      #customItem:focus {
+        border-color: #76ff03; /* Change border color on focus */
+        outline: none; /* Remove default outline */
+      }
+
+      button {
+        padding: 10px 20px; /* Button padding */
+        font-size: 1em; /* Adjust font size */
+        background-color: #4caf50; /* Button color */
+        color: #ffffff; /* Text color */
+        border: none; /* No border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Change cursor on hover */
+        transition: background-color 0.3s; /* Smooth background color transition */
+      }
+
+      button:hover {
+        background-color: #76ff03; /* Change color on hover */
       }
     </style>
   </head>
@@ -45,16 +96,32 @@
 
     <!-- Emoji Categories -->
     <div class="emoji-category">
-      <h2>Produce</h2>
-      <div class="emoji-grid" id="produceGrid"></div>
+      <h2>Fruit</h2>
+      <div class="emoji-grid" id="fruitGrid"></div>
     </div>
     <div class="emoji-category">
-      <h2>Meat</h2>
-      <div class="emoji-grid" id="meatGrid"></div>
+      <h2>Vegetables</h2>
+      <div class="emoji-grid" id="vegetablesGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Beef & Pork</h2>
+      <div class="emoji-grid" id="beefPorkGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Chicken & Turkey</h2>
+      <div class="emoji-grid" id="chickenTurkeyGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Seafood</h2>
+      <div class="emoji-grid" id="seafoodGrid"></div>
     </div>
     <div class="emoji-category">
       <h2>Dairy</h2>
       <div class="emoji-grid" id="dairyGrid"></div>
+    </div>
+    <div class="emoji-category">
+      <h2>Bread</h2>
+      <div class="emoji-grid" id="breadGrid"></div>
     </div>
     <div class="emoji-category">
       <h2>Dry Goods</h2>
@@ -66,8 +133,10 @@
     </div>
 
     <!-- Custom Item Input -->
-    <input type="text" id="customItem" placeholder="Add custom item" />
-    <button onclick="addCustomItem()">Add to List</button>
+    <div class="custom-item-container">
+      <input type="text" id="customItem" placeholder="Add custom item" />
+      <button onclick="addCustomItem()">Add to List</button>
+    </div>
 
     <!-- Grocery List -->
     <h2>Your Grocery List</h2>
@@ -75,55 +144,84 @@
 
     <script>
       // Emoji categories
+      // Expanded emoji categories
       const emojis = {
-        produce: [
+        // Produce
+        fruit: [
           "🍎",
           "🍌",
-          "🥕",
           "🍉",
           "🍇",
           "🍓",
           "🍒",
+          "🍍",
+          "🥭",
+          "🍋",
+          "🍑",
+          "🍐",
+          "🍊",
+          "🍈",
+          "🍏",
+          "🥝",
+        ],
+        vegetables: [
+          "🥕",
           "🍅",
           "🍆",
           "🥑",
-          "🥭",
           "🥒",
           "🥦",
-          "🍍",
           "🌽",
+          "🥔",
+          "🥬",
+          "🧄",
+          "🧅",
+          "🍠",
+          "🍄",
         ],
-        meat: [
-          "🍗",
-          "🥩",
-          "🍖",
-          "🍤",
-          "🍔",
-          "🥓",
-          "🍣",
-          "🦞",
-          "🍤",
-          "🐟",
-          "🦀",
-          "🍢",
-          "🥘",
-        ],
-        dairy: ["🥛", "🧀", "🥚", "🍦", "🥧", "🍶", "🧈", "🍨", "🥥", "🍯"],
-        dryGoods: [
+
+        // Meat
+        beefPork: ["🥩", "🍖", "🥓", "🍔", "🌭"],
+        chickenTurkey: ["🍗", "🦃"],
+        seafood: ["🍤", "🐟", "🦞", "🦀"],
+
+        // Dairy
+        dairy: ["🥛", "🧀", "🥚", "🍦", "🧈", "🍨", "🥥"],
+
+        // Bread
+        bread: [
           "🍞",
+          "🥖",
+          "🥯",
+          "🥐",
+          "🥞",
+          "🧇",
+          "🥨",
+          "🍔",
+          "🌮",
+          "🥪",
+          "🍕",
+        ],
+
+        // Dry Goods
+        dryGoods: [
           "🍚",
           "🍪",
           "🍿",
           "🍜",
           "🥫",
           "🍙",
-          "🥖",
-          "🍝",
-          "🥯",
-          "🍠",
           "🍘",
           "🥜",
+          "🍠",
+          "🍛",
+          "🍝",
+          "🍥",
+          "🥞",
+          "🍯",
         ],
+
+        // Prepared Meals
         preparedMeals: [
           "🌮",
           "🍕",
@@ -133,12 +231,16 @@
           "🍤",
           "🌯",
           "🥪",
-          "🥟",
+          "🥙",
           "🍱",
           "🍛",
           "🥡",
           "🍲",
-          "🍤",
+          "🍣",
+          "🍱",
+          "🥟",
+          "🍛",
+          "🥡",
         ],
       };
 
@@ -162,8 +264,15 @@
       function addToList(item) {
         const listItem = document.createElement("li");
         listItem.textContent = item;
+
+        // Add event listener to remove item on click
+        listItem.addEventListener("click", () => {
+          groceryList.removeChild(listItem);
+          saveList(); // Update saved list after removal
+        });
+
         groceryList.appendChild(listItem);
-        saveList();
+        saveList(); // Update saved list after adding new item
       }
 
       // Add custom item
