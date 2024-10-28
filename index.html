@@ -16,6 +16,7 @@
       h1,
       h2 {
         margin-bottom: 10px;
+        text-align: center;
       }
       .emoji-category {
         margin: 10px 0;
@@ -93,6 +94,9 @@
   </head>
   <body>
     <h1>EmojiGrocery</h1>
+    <!-- Grocery List -->
+    <h2>Your Grocery List</h2>
+    <ul id="groceryList"></ul>
 
     <!-- Emoji Categories -->
     <div class="emoji-category">
@@ -104,17 +108,10 @@
       <div class="emoji-grid" id="vegetablesGrid"></div>
     </div>
     <div class="emoji-category">
-      <h2>Beef & Pork</h2>
+      <h2>Meats</h2>
       <div class="emoji-grid" id="beefPorkGrid"></div>
     </div>
-    <div class="emoji-category">
-      <h2>Chicken & Turkey</h2>
-      <div class="emoji-grid" id="chickenTurkeyGrid"></div>
-    </div>
-    <div class="emoji-category">
-      <h2>Seafood</h2>
-      <div class="emoji-grid" id="seafoodGrid"></div>
-    </div>
+
     <div class="emoji-category">
       <h2>Dairy</h2>
       <div class="emoji-grid" id="dairyGrid"></div>
@@ -137,10 +134,6 @@
       <input type="text" id="customItem" placeholder="Add custom item" />
       <button onclick="addCustomItem()">Add to List</button>
     </div>
-
-    <!-- Grocery List -->
-    <h2>Your Grocery List</h2>
-    <ul id="groceryList"></ul>
 
     <script>
       // Emoji categories
@@ -181,45 +174,28 @@
         ],
 
         // Meat
-        beefPork: ["🥩", "🍖", "🥓", "🍔", "🌭"],
-        chickenTurkey: ["🍗", "🦃"],
-        seafood: ["🍤", "🐟", "🦞", "🦀"],
+        beefPork: [
+          "🥩",
+          "🍖",
+          "🥓",
+          "🍔",
+          "🌭",
+          "🍗",
+          "🦃",
+          "🍤",
+          "🐟",
+          "🦞",
+          "🦀",
+        ],
 
         // Dairy
         dairy: ["🥛", "🧀", "🥚", "🍦", "🧈", "🍨", "🥥"],
 
         // Bread
-        bread: [
-          "🍞",
-          "🥖",
-          "🥯",
-          "🥐",
-          "🥞",
-          "🧇",
-          "🥨",
-          "🍔",
-          "🌮",
-          "🥪",
-          "🍕",
-        ],
+        bread: ["🍞", "🥖", "🥯", "🥐", "🥞", "🧇", "🥨", "🌮"],
 
         // Dry Goods
-        dryGoods: [
-          "🍚",
-          "🍪",
-          "🍿",
-          "🍜",
-          "🥫",
-          "🍙",
-          "🍘",
-          "🥜",
-          "🍠",
-          "🍛",
-          "🍝",
-          "🍥",
-          "🥞",
-          "🍯",
-        ],
+        dryGoods: ["🍚", "🍪", "🍿", "🍜", "🥫", "🥜", "🍝", "🍥", "🍯"],
 
         // Prepared Meals
         preparedMeals: [
@@ -227,8 +203,6 @@
           "🍕",
           "🍔",
           "🍜",
-          "🍣",
-          "🍤",
           "🌯",
           "🥪",
           "🥙",
@@ -236,11 +210,7 @@
           "🍛",
           "🥡",
           "🍲",
-          "🍣",
-          "🍱",
           "🥟",
-          "🍛",
-          "🥡",
         ],
       };
 
